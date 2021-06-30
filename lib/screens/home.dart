@@ -1,7 +1,9 @@
+import 'package:fluttanim/screens/3d_donut/donut.dart';
 import 'package:fluttanim/screens/Reflectly/reflectly_colors.dart';
 import 'package:fluttanim/screens/channel_scroll/channel.dart';
 import 'package:fluttanim/screens/graph/graph.dart';
 import 'package:fluttanim/screens/movie_booking/movies.dart';
+import 'package:fluttanim/screens/rubber_range_picker/rubber_range_picker.dart';
 import 'package:fluttanim/screens/snap_stories/stories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,8 @@ class Home extends StatelessWidget {
     {"name": "🎥 Movie Booking", "screen": Movies()},
     {"name": "🌈 Reflectly Colors", "screen": ReflectlyColors()},
     {"name": "🚀 Graph", "screen": Graph()},
+    {"name": "🏹 Rubber Range Picker", "screen": RubberRangePicker()},
+    {"name": "💫 3d Donut", "screen": Donut()},
     {"name": "🐭 Rat", "screen": Rat()},
   ];
   @override
