@@ -8,7 +8,7 @@ import 'package:fluttanim/screens/snap_stories/stories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'Rat/rat.dart';
+import 'balloon_range_picker/balloon_range_picker.dart';
 
 class Home extends StatelessWidget {
   Home({Key key}) : super(key: key);
@@ -17,10 +17,8 @@ class Home extends StatelessWidget {
     {"name": "📜 Channel Scroll", "screen": Channel()},
     {"name": "🎥 Movie Booking", "screen": Movies()},
     {"name": "🌈 Reflectly Colors", "screen": ReflectlyColors()},
-    {"name": "🚀 Graph", "screen": Graph()},
     {"name": "🏹 Rubber Range Picker", "screen": RubberRangePicker()},
-    {"name": "💫 3d Donut", "screen": Donut()},
-    {"name": "🐭 Rat", "screen": Rat()},
+    {"name": "🎈 Balloon Range Picker", "screen": BalloonRangePicker()},
   ];
   @override
   Widget build(BuildContext context) {

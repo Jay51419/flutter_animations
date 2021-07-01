@@ -28,6 +28,7 @@ class Backdrop extends StatelessWidget {
     return Stack(
       children: [
         Row(
+          textDirection: TextDirection.rtl,
           children: List.generate(
             images.length,
             (index) {
