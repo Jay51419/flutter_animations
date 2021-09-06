@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:fluttanim/screens/circular_slider/slider.dart';
 import 'package:flutter/material.dart';
@@ -15,22 +16,26 @@ class LiquidTabBar extends HookWidget {
     Icons.album,
     Icons.person,
   ];
+  final List<Color> colors = [
+    Colors.yellow.shade300,
+    Colors.pink.shade300,
+    Colors.greenAccent,
+    Colors.blueAccent,
+    Colors.orangeAccent
+  ];
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var tabWidth = size.width / tabs.length;
     var controller =
-        useAnimationController(duration: Duration(milliseconds: 300));
-    var iconController =
-        useAnimationController(duration: Duration(milliseconds: 300));
+        useAnimationController(duration: Duration(milliseconds: 600));
+    var ballController =
+        useAnimationController(duration: Duration(milliseconds: 600));
 
     var activeTab = useState(0);
     var color = useAnimation(
-        ColorTween(begin: Colors.white, end: Colors.amber[400])
+        ColorTween(begin: Colors.white, end: colors[activeTab.value])
             .animate(controller));
-    var activeIconColor = useAnimation(
-        ColorTween(begin: Colors.black, end: Colors.amber)
-            .animate(iconController));
     var width = useAnimation(
         Tween<double>(begin: size.width, end: size.width * 0.8)
             .animate(controller));
@@ -40,7 +45,7 @@ class LiquidTabBar extends HookWidget {
     var borderRadius =
         useAnimation(Tween<double>(begin: 0, end: 50).animate(controller));
     var y = useAnimation(
-        Tween<double>(begin: 0, end: -tabHeight).animate(controller));
+        Tween<double>(begin: 0, end: -tabHeight - 30).animate(ballController));
 
     return Scaffold(
       body: Container(
@@ -49,15 +54,84 @@ class LiquidTabBar extends HookWidget {
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            Transform.translate(
-              offset: Offset(-size.width / 2, -tabHeight),
-              child: CustomPaint(
-                painter: LiquidPainter(),
+            ColorFiltered(
+              colorFilter: ColorFilter.matrix([
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                18,
+                -7.0 * 255
+              ]),
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(
+                  sigmaX: 10,
+                  sigmaY: 10,
+                  tileMode: TileMode.decal,
+                ),
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Transform.scale(
+                        origin: Offset(tabWidth * activeTab.value, y - 20),
+                        scale: Interpolate(
+                            inputRange: [-tabHeight - 30, -tabHeight, 0],
+                            outputRange: [0, 1, 1]).eval(y),
+                        child: Transform.translate(
+                            offset: Offset(
+                              (tabWidth * activeTab.value),
+                              y - 20,
+                            ),
+                            child: SizedBox(
+                              height: 50,
+                              width: tabWidth,
+                              child: Align(
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    color: color,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                ),
+                              ),
+                            )),
+                      ),
+                    ),
+                    Container(
+                      height: tabHeight - 5,
+                      width: width - 5,
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(borderRadius),
+                          topRight: Radius.circular(borderRadius),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
               height: tabHeight,
-              width: width,
+              width: width + 40,
               decoration: BoxDecoration(
                 color: color,
                 borderRadius: BorderRadius.only(
@@ -75,8 +149,9 @@ class LiquidTabBar extends HookWidget {
                           controller.forward().whenComplete(
                                 () => controller.reverse(),
                               );
-                          iconController.reset();
-                          iconController.forward();
+                          ballController.forward().whenComplete(() =>
+                              Future.delayed(Duration(milliseconds: 600),
+                                  () => ballController.reset()));
                         },
                         child: Container(
                           height: tabHeight,
@@ -98,17 +173,26 @@ class LiquidTabBar extends HookWidget {
             ),
             Align(
               alignment: Alignment.bottomLeft,
-              child: Transform.translate(
-                offset: Offset(
+              child: Transform.scale(
+                origin: Offset(
                   tabWidth * activeTab.value,
                   y,
                 ),
-                child: Container(
-                    height: tabHeight,
-                    alignment: Alignment.center,
-                    width: (size.width / tabs.length),
-                    child: Icon(tabs[activeTab.value],
-                        size: 30, color: activeIconColor)),
+                scale: Interpolate(
+                    inputRange: [-tabHeight - 30, -tabHeight, 0],
+                    outputRange: [0, 1, 1]).eval(y),
+                child: Transform.translate(
+                  offset: Offset(
+                    tabWidth * activeTab.value,
+                    y,
+                  ),
+                  child: Container(
+                      height: tabHeight,
+                      alignment: Alignment.center,
+                      width: (size.width / tabs.length),
+                      child: Icon(tabs[activeTab.value],
+                          size: 25, color: Colors.black)),
+                ),
               ),
             ),
           ],
@@ -116,25 +200,4 @@ class LiquidTabBar extends HookWidget {
       ),
     );
   }
-}
-
-class LiquidPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
-    Path path = Path();
-    path.quadraticBezierTo(20, -20, 15, -20);
-    path.arcToPoint(-polar2canvas(center: 200, radius: 50, theta: pi / 1.2),
-        radius: Radius.circular(40));
-    path.quadraticBezierTo(50, 20, 15, 50);
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(LiquidPainter oldDelegate) => false;
-
-  @override
-  bool shouldRebuildSemantics(LiquidPainter oldDelegate) => false;
 }

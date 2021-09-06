@@ -1,7 +1,7 @@
 import 'package:fluttanim/screens/Reflectly/reflectly_colors.dart';
 import 'package:fluttanim/screens/channel_scroll/channel.dart';
 import 'package:fluttanim/screens/gooey_cell/gooey_cell.dart';
-// import 'package:fluttanim/screens/liquid_tabbar/liquid_tabbar.dart';
+import 'package:fluttanim/screens/liquid_tabbar/liquid_tabbar.dart';
 import 'package:fluttanim/screens/movie_booking/movies.dart';
 import 'package:fluttanim/screens/rubber_range_picker/rubber_range_picker.dart';
 import 'package:fluttanim/screens/snap_stories/stories.dart';
@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
     {"name": "🎈 Balloon Range Picker", "screen": BalloonRangePicker()},
     {"name": "❣️ Gooey Cell", "screen": GooeyCell()},
     // {"name": "🪐 Circular Slider", "screen": CircularSlider()},
-    // {"name": "〰️ Liquid TabBar", "screen": LiquidTabBar()},
+    {"name": "〰️ Liquid TabBar", "screen": LiquidTabBar()},
   ];
   @override
   Widget build(BuildContext context) {
