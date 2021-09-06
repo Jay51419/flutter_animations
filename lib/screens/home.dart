@@ -1,9 +1,7 @@
-import 'package:fluttanim/screens/3d_donut/donut.dart';
 import 'package:fluttanim/screens/Reflectly/reflectly_colors.dart';
 import 'package:fluttanim/screens/channel_scroll/channel.dart';
 import 'package:fluttanim/screens/gooey_cell/gooey_cell.dart';
-import 'package:fluttanim/screens/graph/graph.dart';
-import 'package:fluttanim/screens/liquid_tabbar/liquid_tabbar.dart';
+// import 'package:fluttanim/screens/liquid_tabbar/liquid_tabbar.dart';
 import 'package:fluttanim/screens/movie_booking/movies.dart';
 import 'package:fluttanim/screens/rubber_range_picker/rubber_range_picker.dart';
 import 'package:fluttanim/screens/snap_stories/stories.dart';
@@ -11,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'balloon_range_picker/balloon_range_picker.dart';
-import 'circular_slider/circular_slider.dart';
+// import 'circular_slider/circular_slider.dart';
 
 class Home extends StatelessWidget {
   Home({Key key}) : super(key: key);
@@ -23,13 +21,14 @@ class Home extends StatelessWidget {
     {"name": "🏹 Rubber Range Picker", "screen": RubberRangePicker()},
     {"name": "🎈 Balloon Range Picker", "screen": BalloonRangePicker()},
     {"name": "❣️ Gooey Cell", "screen": GooeyCell()},
-    {"name": "🪐 Circular Slider", "screen": CircularSlider()},
+    // {"name": "🪐 Circular Slider", "screen": CircularSlider()},
     // {"name": "〰️ Liquid TabBar", "screen": LiquidTabBar()},
   ];
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.black45,
       body: Container(
         height: size.height,
         width: size.width,
@@ -53,9 +52,9 @@ class Home extends StatelessWidget {
                 child: Text(
                   screens[index]["name"],
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Colors.white),
                 ),
               ),
             );

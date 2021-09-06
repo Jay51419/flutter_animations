@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:fluttanim/screens/circular_slider/slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:interpolate/interpolate.dart';
@@ -17,9 +20,9 @@ class LiquidTabBar extends HookWidget {
     var size = MediaQuery.of(context).size;
     var tabWidth = size.width / tabs.length;
     var controller =
-        useAnimationController(duration: Duration(milliseconds: 800));
+        useAnimationController(duration: Duration(milliseconds: 300));
     var iconController =
-        useAnimationController(duration: Duration(milliseconds: 800));
+        useAnimationController(duration: Duration(milliseconds: 300));
 
     var activeTab = useState(0);
     var color = useAnimation(
@@ -35,7 +38,7 @@ class LiquidTabBar extends HookWidget {
         Tween<double>(begin: (size.width / tabs.length), end: 0)
             .animate(controller));
     var borderRadius =
-        useAnimation(Tween<double>(begin: 0, end: 20).animate(controller));
+        useAnimation(Tween<double>(begin: 0, end: 50).animate(controller));
     var y = useAnimation(
         Tween<double>(begin: 0, end: -tabHeight).animate(controller));
 
@@ -46,6 +49,12 @@ class LiquidTabBar extends HookWidget {
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
+            Transform.translate(
+              offset: Offset(-size.width / 2, -tabHeight),
+              child: CustomPaint(
+                painter: LiquidPainter(),
+              ),
+            ),
             Container(
               height: tabHeight,
               width: width,
@@ -107,4 +116,25 @@ class LiquidTabBar extends HookWidget {
       ),
     );
   }
+}
+
+class LiquidPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+    Path path = Path();
+    path.quadraticBezierTo(20, -20, 15, -20);
+    path.arcToPoint(-polar2canvas(center: 200, radius: 50, theta: pi / 1.2),
+        radius: Radius.circular(40));
+    path.quadraticBezierTo(50, 20, 15, 50);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(LiquidPainter oldDelegate) => false;
+
+  @override
+  bool shouldRebuildSemantics(LiquidPainter oldDelegate) => false;
 }
