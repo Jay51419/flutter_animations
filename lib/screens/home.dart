@@ -1,6 +1,7 @@
 import 'package:fluttanim/screens/Reflectly/reflectly_colors.dart';
 import 'package:fluttanim/screens/channel_scroll/channel.dart';
 import 'package:fluttanim/screens/gooey_cell/gooey_cell.dart';
+import 'package:fluttanim/screens/liquid_card/liquid_card.dart';
 import 'package:fluttanim/screens/liquid_tabbar/liquid_tabbar.dart';
 import 'package:fluttanim/screens/movie_booking/movies.dart';
 import 'package:fluttanim/screens/rubber_range_picker/rubber_range_picker.dart';
@@ -23,6 +24,7 @@ class Home extends StatelessWidget {
     {"name": "❣️ Gooey Cell", "screen": GooeyCell()},
     // {"name": "🪐 Circular Slider", "screen": CircularSlider()},
     {"name": "〰️ Liquid TabBar", "screen": LiquidTabBar()},
+    {"name": "🗃️ Liquid Card", "screen": LiquidCard()},
   ];
   @override
   Widget build(BuildContext context) {
@@ -35,9 +37,9 @@ class Home extends StatelessWidget {
         child: ListView.builder(
           itemCount: screens.length,
           itemBuilder: (ctx, index) {
-            return InkWell(
+            return GestureDetector(
               onTap: () {
-                Navigator.of(context).push(CupertinoPageRoute(builder: (ctx) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
                   return screens[index]["screen"];
                 }));
               },
