@@ -1,22 +1,33 @@
 import 'package:fluttanim/screens/movie_booking/Backdrop.dart';
 import 'package:fluttanim/screens/movie_booking/movie.dart';
+import 'package:fluttanim/screens/movie_booking/movie_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:interpolate/interpolate.dart';
 
 class Movies extends HookWidget {
   Movies({Key key}) : super(key: key);
-  final List<String> images = [
-    "https://picsum.photos/1080/720",
-    "https://picsum.photos/1080/721",
-    "https://picsum.photos/1080/722",
-    "https://picsum.photos/1080/723",
-    "https://picsum.photos/1080/724",
-    "https://picsum.photos/1080/725",
-    "https://picsum.photos/1080/726",
-    "https://picsum.photos/1080/727",
-    "https://picsum.photos/1080/728",
-    "https://picsum.photos/1080/729",
+  final List<MovieModel> images = [
+    MovieModel(
+      name: "SpiderMan",
+      image: AssetImage("assets/movie/spiderman.jpg"),
+    ),
+    MovieModel(
+      name: "Washington DC",
+      image: AssetImage("assets/movie/Washington_dc.jpg"),
+    ),
+    MovieModel(
+      name: "Batman",
+      image: AssetImage("assets/movie/batman.jpg"),
+    ),
+    MovieModel(
+      name: "Grand Lake",
+      image: AssetImage("assets/movie/grand_lake.jpg"),
+    ),
+    MovieModel(
+      name: "Abstraction",
+      image: AssetImage("assets/movie/abstraction.jpg"),
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -74,7 +85,7 @@ class Movies extends HookWidget {
                             .eval(x.value)),
                     child: Movie(
                         key: Key("$index"),
-                        image: images[index],
+                        image: images[index].image,
                         width: size.width),
                   ),
                 );

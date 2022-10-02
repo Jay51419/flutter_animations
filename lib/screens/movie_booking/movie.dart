@@ -4,7 +4,7 @@ var margin = 20;
 double radius = 20;
 
 class Movie extends StatelessWidget {
-  final String image;
+  final ImageProvider image;
   final double width;
   const Movie({
     Key key,
@@ -31,8 +31,8 @@ class Movie extends StatelessWidget {
               borderRadius: BorderRadius.circular(radius),
               color: Colors.black45,
             ),
-            child: Image.network(
-              image,
+            child: Image(
+              image: image,
               fit: BoxFit.fill,
             ),
           ),

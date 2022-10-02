@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:interpolate/interpolate.dart';
 
+import 'movie_model.dart';
+
 class Backdrop extends StatelessWidget {
   final ValueNotifier<double> x;
   final ValueNotifier<int> duration;
@@ -9,17 +11,27 @@ class Backdrop extends StatelessWidget {
     @required this.x,
     @required this.duration,
   }) : super(key: key);
-  final List<String> images = [
-    "https://picsum.photos/1080/720",
-    "https://picsum.photos/1080/721",
-    "https://picsum.photos/1080/722",
-    "https://picsum.photos/1080/723",
-    "https://picsum.photos/1080/724",
-    "https://picsum.photos/1080/725",
-    "https://picsum.photos/1080/726",
-    "https://picsum.photos/1080/727",
-    "https://picsum.photos/1080/728",
-    "https://picsum.photos/1080/729",
+  final List<MovieModel> images = [
+    MovieModel(
+      name: "SpiderMan",
+      image: AssetImage("assets/movie/spiderman.jpg"),
+    ),
+    MovieModel(
+      name: "Washington DC",
+      image: AssetImage("assets/movie/Washington_dc.jpg"),
+    ),
+    MovieModel(
+      name: "Batman",
+      image: AssetImage("assets/movie/batman.jpg"),
+    ),
+    MovieModel(
+      name: "Grand Lake",
+      image: AssetImage("assets/movie/grand_lake.jpg"),
+    ),
+    MovieModel(
+      name: "Abstraction",
+      image: AssetImage("assets/movie/abstraction.jpg"),
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -37,7 +49,7 @@ class Backdrop extends StatelessWidget {
                   duration: Duration(
                     milliseconds: duration.value,
                   ),
-                  height: 0.6 * size.height,
+                  height: size.height,
                   width: Interpolate(inputRange: [
                     (index - 1) * movieWidth,
                     (index) * movieWidth,
@@ -48,8 +60,8 @@ class Backdrop extends StatelessWidget {
                     0,
                   ], extrapolate: Extrapolate.clamp)
                       .eval(x.value),
-                  child: Image.network(
-                    images[index],
+                  child: Image(
+                    image: images[index].image,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -63,7 +75,7 @@ class Backdrop extends StatelessWidget {
           child: Opacity(
             opacity: 0.5,
             child: Container(
-              height: 0.6 * size.height,
+              height: size.height,
               width: size.width,
               color: Colors.black,
             ),
